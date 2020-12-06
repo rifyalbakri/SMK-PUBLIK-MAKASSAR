@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "522335260996",
+    "firebase_url": "https://smk-publik-makassar-fd85c.firebaseio.com",
+    "project_id": "smk-publik-makassar-fd85c",
+    "storage_bucket": "smk-publik-makassar-fd85c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522335260996:android:add3d81a4c64fb43bf0711",
+        "android_client_info": {
+          "package_name": "com.smk.publik.makassar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522335260996-7nq4ufldfnrardcpar80lr87t3mtues0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDguoqizntKNKLtwhf2-6r8uvl5ZPaAhZA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522335260996-7nq4ufldfnrardcpar80lr87t3mtues0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
