@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'com.google.firebase.firebase-perf'
+    id "com.google.protobuf"
     id 'kotlin-android'
     id "kotlin-kapt"
 }
@@ -42,20 +44,60 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.1.1')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.android.material:material:1.2.1'
     testImplementation 'junit:junit:4.13.1'
+    def koin_version = "2.2.0"
+    implementation "org.koin:koin-core:$koin_version"
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    implementation "org.koin:koin-androidx-fragment:$koin_version"
     def lifecycle_version = "2.2.0"
+    implementation 'com.google.crypto.tink:tink-android:1.5.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.6'
+    implementation "androidx.datastore:datastore:1.0.0-alpha05"
+    implementation  "com.google.protobuf:protobuf-javalite:3.11.0"
+    implementation 'org.greenrobot:eventbus:3.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation "com.soywiz.korlibs.klock:klock-jvm:2.0.2"
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-storage-ktx'
+    implementation 'com.google.firebase:firebase-database-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-perf-ktx'
     implementation 'com.blankj:utilcodex:1.30.5'
+}
+
+kapt {
+    correctErrorTypes true
+}
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.11.0"
+    }
+
+    // Generates the java Protobuf-lite code for the Protobufs in this project. See
+    // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
+    // for more information.
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
+        }
+    }
 }
