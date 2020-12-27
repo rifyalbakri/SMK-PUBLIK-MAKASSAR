@@ -30,10 +30,11 @@ class UserViewModel(
     private val mUserDataStore: DataStore<User?>
 ) : ViewModel() {
 
-    private val mAuth: FirebaseAuth by lazy {
+    val mAuth: FirebaseAuth by lazy {
         Firebase.auth
     }
-    private val mRealtimeDatabase: DatabaseReference by lazy {
+
+    val mRealtimeDatabase: DatabaseReference by lazy {
         Firebase.database.reference
     }
 
@@ -59,13 +60,13 @@ class UserViewModel(
         }
     }
 
-    private val _register: MutableLiveData<UserState.Register> = MutableLiveData()
-    val mRegister: LiveData<UserState.Register> get() = _register
+    private val _register: MutableLiveData<UserState.RegisterOrLogin> = MutableLiveData()
+    val mRegister: LiveData<UserState.RegisterOrLogin> get() = _register
 
     fun registerNew(email: String, pass: String) {
-        _register.postValue(UserState.Register.Loading)
+        _register.postValue(UserState.RegisterOrLogin.Loading)
         mAuth.createUserWithEmailAndPassword(email, pass).addOnCanceledListener {
-            _register.postValue(UserState.Register.Cancelled)
+            _register.postValue(UserState.RegisterOrLogin.Cancelled)
         }.addOnSuccessListener {userResult ->
             viewModelScope.launch {
                 mUserDataStore.updateData { it?.toBuilder()
@@ -77,12 +78,39 @@ class UserViewModel(
             mRealtimeDatabase.child("users").child(userResult.user?.uid.toString()).setValue(Users(
                 email, pass
             )).addOnSuccessListener {
-                _register.postValue(UserState.Register.Success(userResult.user))
+                _register.postValue(UserState.RegisterOrLogin.Success(userResult.user))
             }.addOnFailureListener {
-                _register.postValue(UserState.Register.Failed(it))
+                _register.postValue(UserState.RegisterOrLogin.Failed(it))
             }
         }.addOnFailureListener {
-            _register.postValue(UserState.Register.Failed(it))
+            _register.postValue(UserState.RegisterOrLogin.Failed(it))
+        }
+    }
+
+    private val _login: MutableLiveData<UserState.RegisterOrLogin> = MutableLiveData()
+    val mLogin: LiveData<UserState.RegisterOrLogin> get() = _register
+
+    fun login(email: String, pass: String) {
+        _login.postValue(UserState.RegisterOrLogin.Loading)
+        mAuth.signInWithEmailAndPassword(email, pass).addOnCanceledListener {
+            _login.postValue(UserState.RegisterOrLogin.Cancelled)
+        }.addOnSuccessListener {userResult ->
+            viewModelScope.launch {
+                mUserDataStore.updateData { it?.toBuilder()
+                    ?.setUserId(userResult.user?.uid.toString())
+                    ?.setUsername(email)
+                    ?.build()
+                }
+            }
+            mRealtimeDatabase.child("users").child(userResult.user?.uid.toString()).setValue(Users(
+                email, pass
+            )).addOnSuccessListener {
+                _login.postValue(UserState.RegisterOrLogin.Success(userResult.user))
+            }.addOnFailureListener {
+                _login.postValue(UserState.RegisterOrLogin.Failed(it))
+            }
+        }.addOnFailureListener {
+            _login.postValue(UserState.RegisterOrLogin.Failed(it))
         }
     }
 

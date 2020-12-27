@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">SMK Publik Makassar</string>
+    <string name="label_e_learning">E-Learning</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
+    <string name="label_password_repeat">Ulangi Password</string>
+    <string name="label_nuptk">NUPTK</string>
+    <string name="button_label_sign_up_underline"><u>Sign up</u></string>
+    <string name="button_label_sign_up">Sign up</string>
+    <string name="button_label_sign_in">Sign in</string>
+    <string name="button_label_sign_in_underline"><u>Sign in</u></string>
+    <string name="label_siswa_baru">Pengguna baru?</string>
+    <string name="label_sudah_punya_akun">Sudah punya akun ?</string>
+    <string name="button_label_role_siswa">Siswa</string>
+    <string name="button_label_role_guru">Guru</string>
+    <string name="button_label_role_admin">Admin</string>
+    <string name="button_label_role_umum">Umum</string>
+    <string name="label_nama_lengkap">Nama Lengkap</string>
 </resources>

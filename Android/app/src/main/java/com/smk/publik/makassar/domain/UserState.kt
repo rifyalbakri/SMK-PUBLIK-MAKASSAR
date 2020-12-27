@@ -10,11 +10,11 @@ import com.google.firebase.auth.FirebaseUser
  */
 
 object UserState {
-    sealed class Register {
-        object Loading : Register()
-        object Cancelled : Register()
-        class Failed(val e: Throwable) : Register()
-        class Success(val user: FirebaseUser?) : Register()
+    sealed class RegisterOrLogin {
+        object Loading : RegisterOrLogin()
+        object Cancelled : RegisterOrLogin()
+        class Failed(val e: Throwable) : RegisterOrLogin()
+        class Success(val user: FirebaseUser?) : RegisterOrLogin()
     }
     sealed class Data {
         object Loading : Data()

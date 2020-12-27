@@ -44,10 +44,10 @@ class UserObserver(
     private fun observeRegister() {
         viewModel.mRegister.observe(owner, {
             when(it) {
-                is UserState.Register.Loading -> view.onRegisterStart()
-                is UserState.Register.Cancelled -> view.onRegisterCancelled()
-                is UserState.Register.Success -> view.onRegisterSuccess(it.user)
-                is UserState.Register.Failed -> view.onRegisterFailed(it.e)
+                is UserState.RegisterOrLogin.Loading -> view.onRegisterStart()
+                is UserState.RegisterOrLogin.Cancelled -> view.onRegisterCancelled()
+                is UserState.RegisterOrLogin.Success -> view.onRegisterSuccess(it.user)
+                is UserState.RegisterOrLogin.Failed -> view.onRegisterFailed(it.e)
             }
         })
     }
