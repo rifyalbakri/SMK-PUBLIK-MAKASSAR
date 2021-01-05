@@ -1,20 +1,13 @@
 package com.smk.publik.makassar.presentation.viewmodel
 
-import androidx.datastore.core.DataStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.blankj.utilcode.util.ToastUtils
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.FirebaseUser
+import com.smk.publik.makassar.data.repositories.UserRepository
 import com.smk.publik.makassar.datastore.User
-import com.smk.publik.makassar.domain.UserState
-import com.smk.publik.makassar.domain.Users
+import com.smk.publik.makassar.domain.State
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -27,105 +20,84 @@ import kotlinx.coroutines.launch
  */
 
 class UserViewModel(
-    private val mUserDataStore: DataStore<User?>
+    private val repository: UserRepository
 ) : ViewModel() {
+    val isLoggedIn: Boolean get() = repository.firebaseAuth.currentUser != null
 
-    val mAuth: FirebaseAuth by lazy {
-        Firebase.auth
-    }
+    private val _localUser: MutableLiveData<State<User?>> = MutableLiveData()
+    val localUser: LiveData<State<User?>> get() = _localUser
 
-    val mRealtimeDatabase: DatabaseReference by lazy {
-        Firebase.database.reference
-    }
-
-    private val _user: MutableLiveData<User?> = MutableLiveData()
-    val mUser: LiveData<User?> get() = _user
-
-    fun getUser() {
+    fun resetLocalUserState() = _login.postValue(State.Idle())
+    fun getLocalUserData() {
         viewModelScope.launch {
-            mUserDataStore.data.catch {
-                ToastUtils.showShort(it.message)
-            }.collect {
-                _user.postValue(it)
-            }
+            repository.getLocalUserData().catch { _localUser.postValue(State.Failed(it)) }
+                .collect { _localUser.postValue(it) }
         }
     }
 
-    private val _newUserData: MutableLiveData<User?> = MutableLiveData()
-    val mNewUserData: LiveData<User?> get() = _newUserData
+    private val _login: MutableLiveData<State<FirebaseUser?>> = MutableLiveData()
+    val login: LiveData<State<FirebaseUser?>> get() = _login
 
-    fun updateUser(user: User?) {
+    fun resetLoginState() = _login.postValue(State.Idle())
+    fun login(email: String, password: String) {
         viewModelScope.launch {
-            _newUserData.postValue(mUserDataStore.updateData { user })
+            repository.login(email, password).catch { _login.postValue(State.Failed(it)) }
+                .collect { _login.postValue(it) }
         }
     }
 
-    private val _register: MutableLiveData<UserState.RegisterOrLogin> = MutableLiveData()
-    val mRegister: LiveData<UserState.RegisterOrLogin> get() = _register
+    private val _register: MutableLiveData<State<FirebaseUser?>> = MutableLiveData()
+    val register: LiveData<State<FirebaseUser?>> get() = _register
 
-    fun registerNew(email: String, pass: String) {
-        _register.postValue(UserState.RegisterOrLogin.Loading)
-        mAuth.createUserWithEmailAndPassword(email, pass).addOnCanceledListener {
-            _register.postValue(UserState.RegisterOrLogin.Cancelled)
-        }.addOnSuccessListener {userResult ->
-            viewModelScope.launch {
-                mUserDataStore.updateData { it?.toBuilder()
-                    ?.setUserId(userResult.user?.uid.toString())
-                    ?.setUsername(email)
-                    ?.build()
-                }
-            }
-            mRealtimeDatabase.child("users").child(userResult.user?.uid.toString()).setValue(Users(
-                email, pass
-            )).addOnSuccessListener {
-                _register.postValue(UserState.RegisterOrLogin.Success(userResult.user))
-            }.addOnFailureListener {
-                _register.postValue(UserState.RegisterOrLogin.Failed(it))
-            }
-        }.addOnFailureListener {
-            _register.postValue(UserState.RegisterOrLogin.Failed(it))
+    fun resetRegisterState() = _register.postValue(State.Idle())
+    fun register(email: String, password: String) {
+        viewModelScope.launch {
+            repository.register(email, password).catch { _register.postValue(State.Failed(it)) }
+                .collect { _register.postValue(it) }
         }
     }
 
-    private val _login: MutableLiveData<UserState.RegisterOrLogin> = MutableLiveData()
-    val mLogin: LiveData<UserState.RegisterOrLogin> get() = _register
+    private val _emailVerify: MutableLiveData<State<Boolean>> = MutableLiveData()
+    val emailVerify: LiveData<State<Boolean>> get() = _emailVerify
 
-    fun login(email: String, pass: String) {
-        _login.postValue(UserState.RegisterOrLogin.Loading)
-        mAuth.signInWithEmailAndPassword(email, pass).addOnCanceledListener {
-            _login.postValue(UserState.RegisterOrLogin.Cancelled)
-        }.addOnSuccessListener {userResult ->
-            viewModelScope.launch {
-                mUserDataStore.updateData { it?.toBuilder()
-                    ?.setUserId(userResult.user?.uid.toString())
-                    ?.setUsername(email)
-                    ?.build()
-                }
-            }
-            mRealtimeDatabase.child("users").child(userResult.user?.uid.toString()).setValue(Users(
-                email, pass
-            )).addOnSuccessListener {
-                _login.postValue(UserState.RegisterOrLogin.Success(userResult.user))
-            }.addOnFailureListener {
-                _login.postValue(UserState.RegisterOrLogin.Failed(it))
-            }
-        }.addOnFailureListener {
-            _login.postValue(UserState.RegisterOrLogin.Failed(it))
+    fun resetEmailVerifyState() = _emailVerify.postValue(State.Idle())
+    fun sendEmailVerification() {
+        viewModelScope.launch {
+            repository.sendEmailVerification().catch { _emailVerify.postValue(State.Failed(it)) }
+                .collect { _emailVerify.postValue(it) }
         }
     }
 
+    private val _sendForgot: MutableLiveData<State<Boolean>> = MutableLiveData()
+    val sendForgot: LiveData<State<Boolean>> get() = _sendForgot
 
-    private val _userData: MutableLiveData<UserState.Data> = MutableLiveData()
-    val mUserData: LiveData<UserState.Data> get() = _userData
+    fun resetSendForgotState() = _sendForgot.postValue(State.Idle())
+    fun sendForgotPassword(email: String) {
+        viewModelScope.launch {
+            repository.sendPasswordResetEmail(email).catch { _sendForgot.postValue(State.Failed(it)) }
+                .collect { _sendForgot.postValue(it) }
+        }
+    }
 
-    fun getUserData(userId: String) {
-        mRealtimeDatabase.child("users").child(userId).addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                _userData.postValue(UserState.Data.Success(snapshot.getValue<Users>()))
-            }
-            override fun onCancelled(error: DatabaseError) {
-                _userData.postValue(UserState.Data.Failed(error.toException()))
-            }
-        })
+    private val _verifyCodePassword: MutableLiveData<State<String>> = MutableLiveData()
+    val verifyCodePassword: LiveData<State<String>> get() = _verifyCodePassword
+
+    fun resetVerifyCodePasswordState() = _verifyCodePassword.postValue(State.Idle())
+    fun verifyCodePassword(code: String) {
+        viewModelScope.launch {
+            repository.verifyPasswordResetCode(code).catch { _verifyCodePassword.postValue(State.Failed(it)) }
+                .collect { _verifyCodePassword.postValue(it) }
+        }
+    }
+
+    private val _changePassword: MutableLiveData<State<Boolean>> = MutableLiveData()
+    val changePassword: LiveData<State<Boolean>> get() = _changePassword
+
+    fun resetChangePasswordState() = _sendForgot.postValue(State.Idle())
+    fun changePassword(code: String, email: String) {
+        viewModelScope.launch {
+            repository.changePassword(code, email).catch { _sendForgot.postValue(State.Failed(it)) }
+                .collect { _sendForgot.postValue(it) }
+        }
     }
 }

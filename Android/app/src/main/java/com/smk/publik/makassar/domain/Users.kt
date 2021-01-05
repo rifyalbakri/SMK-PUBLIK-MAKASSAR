@@ -10,6 +10,9 @@ import android.provider.ContactsContract
  */
 
 data class Users(
+    val fullName: String? = null,
     val email: String? = null,
-    val password: String? = null
+    val password: String? = null,
+    val roles: Int? = null,
+    val nuptk: String? = null
 )

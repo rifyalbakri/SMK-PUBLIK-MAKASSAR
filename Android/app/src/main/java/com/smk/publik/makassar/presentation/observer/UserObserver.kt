@@ -6,8 +6,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import com.google.firebase.auth.FirebaseUser
 import com.smk.publik.makassar.datastore.User
-import com.smk.publik.makassar.domain.UserState
-import com.smk.publik.makassar.domain.Users
+import com.smk.publik.makassar.domain.State
 import com.smk.publik.makassar.presentation.viewmodel.UserViewModel
 
 /**
@@ -23,56 +22,98 @@ class UserObserver(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
-        observeUser()
-        observeUpdateUser()
-        observeRegister()
-        observeGetData()
-    }
-
-    private fun observeUser() {
-        viewModel.mUser.observe(owner, {
-            view.onGetUser(it)
-        })
-    }
-
-    private fun observeUpdateUser() {
-        viewModel.mNewUserData.observe(owner, {
-            view.onUpdateUser(it)
-        })
-    }
-
-    private fun observeRegister() {
-        viewModel.mRegister.observe(owner, {
+        viewModel.localUser.observe(owner, {
             when(it) {
-                is UserState.RegisterOrLogin.Loading -> view.onRegisterStart()
-                is UserState.RegisterOrLogin.Cancelled -> view.onRegisterCancelled()
-                is UserState.RegisterOrLogin.Success -> view.onRegisterSuccess(it.user)
-                is UserState.RegisterOrLogin.Failed -> view.onRegisterFailed(it.e)
+                is State.Idle -> view.onLocalUserIdle()
+                is State.Loading -> view.onLocalUserLoading()
+                is State.Success -> view.onLocalUserSuccess(it.data)
+                is State.Failed -> view.onLocalUserFailed(it.throwable)
             }
         })
-    }
-
-    private fun observeGetData() {
-        viewModel.mUserData.observe(owner, {
+        viewModel.register.observe(owner, {
             when(it) {
-                is UserState.Data.Loading -> view.onFetchingUserData()
-                is UserState.Data.Success -> view.onFetchUserDataSuccess(it.user)
-                is UserState.Data.Failed -> view.onFetchUserDataFailed(it.e)
+                is State.Idle -> view.onRegisterIdle()
+                is State.Loading -> view.onRegisterLoading()
+                is State.Success -> view.onRegisterSuccess(it.data)
+                is State.Failed -> view.onRegisterFailed(it.throwable)
+            }
+        })
+        viewModel.emailVerify.observe(owner, {
+            when(it) {
+                is State.Idle -> view.onSendingEmailVerificationIdle()
+                is State.Loading -> view.onSendingEmailVerificationLoading()
+                is State.Success -> view.onSendingEmailVerificationSuccess()
+                is State.Failed -> view.onSendingEmailVerificationFailed(it.throwable)
+            }
+        })
+        viewModel.login.observe(owner, {
+            when(it) {
+                is State.Idle -> view.onLoginIdle()
+                is State.Loading -> view.onLoginLoading()
+                is State.Success -> view.onLoginSuccess(it.data)
+                is State.Failed -> view.onLoginFailed(it.throwable)
+            }
+        })
+        viewModel.sendForgot.observe(owner, {
+            when(it) {
+                is State.Idle -> view.onSendForgotPasswordIdle()
+                is State.Loading -> view.onSendForgotPasswordLoading()
+                is State.Success -> view.onSendForgotPasswordSuccess()
+                is State.Failed -> view.onSendForgotPasswordFailed(it.throwable)
+            }
+        })
+        viewModel.verifyCodePassword.observe(owner, {
+            when(it) {
+                is State.Idle -> view.onVerifyCodePasswordIdle()
+                is State.Loading -> view.onVerifyCodePasswordLoading()
+                is State.Success -> view.onVerifyCodePasswordSuccess(it.data)
+                is State.Failed -> view.onVerifyCodePasswordFailed(it.throwable)
+            }
+        })
+        viewModel.changePassword.observe(owner, {
+            when(it) {
+                is State.Idle -> view.onChangePasswordIdle()
+                is State.Loading -> view.onChangePasswordLoading()
+                is State.Success -> view.onChangePasswordSuccess()
+                is State.Failed -> view.onChangePasswordFailed(it.throwable)
             }
         })
     }
 
     interface Interfaces {
-        fun onGetUser(user: User?) {}
-        fun onUpdateUser(newUserData: User?) {}
+        fun onLocalUserIdle() {}
+        fun onLocalUserLoading() {}
+        fun onLocalUserFailed(e: Throwable) {}
+        fun onLocalUserSuccess(user: User?) {}
 
-        fun onRegisterStart() {}
-        fun onRegisterCancelled() {}
+        fun onRegisterIdle() {}
+        fun onRegisterLoading() {}
         fun onRegisterFailed(e: Throwable) {}
         fun onRegisterSuccess(user: FirebaseUser?) {}
 
-        fun onFetchingUserData() {}
-        fun onFetchUserDataSuccess(data: Users?) {}
-        fun onFetchUserDataFailed(e: Throwable) {}
+        fun onSendingEmailVerificationIdle() {}
+        fun onSendingEmailVerificationLoading() {}
+        fun onSendingEmailVerificationFailed(e: Throwable) {}
+        fun onSendingEmailVerificationSuccess() {}
+
+        fun onLoginIdle() {}
+        fun onLoginLoading() {}
+        fun onLoginFailed(e: Throwable) {}
+        fun onLoginSuccess(user: FirebaseUser?) {}
+
+        fun onSendForgotPasswordIdle() {}
+        fun onSendForgotPasswordLoading() {}
+        fun onSendForgotPasswordFailed(e: Throwable) {}
+        fun onSendForgotPasswordSuccess() {}
+
+        fun onVerifyCodePasswordIdle() {}
+        fun onVerifyCodePasswordLoading() {}
+        fun onVerifyCodePasswordFailed(e: Throwable) {}
+        fun onVerifyCodePasswordSuccess(code: String) {}
+
+        fun onChangePasswordIdle() {}
+        fun onChangePasswordLoading() {}
+        fun onChangePasswordFailed(e: Throwable) {}
+        fun onChangePasswordSuccess() {}
     }
 }

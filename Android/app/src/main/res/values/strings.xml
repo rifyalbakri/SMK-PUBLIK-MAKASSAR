@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name">SMK Publik Makassar</string>
     <string name="label_e_learning">E-Learning</string>
+    <string name="label_loading">Loading..</string>
+    <string name="label_connecting">Connecting..</string>
     <string name="label_email">Email</string>
     <string name="label_password">Password</string>
     <string name="label_password_repeat">Ulangi Password</string>
     <string name="label_nuptk">NUPTK</string>
     <string name="button_label_sign_up_underline"><u>Sign up</u></string>
+    <string name="button_label_forgot_password_underline"><u>Lupa Password?</u></string>
     <string name="button_label_sign_up">Sign up</string>
     <string name="button_label_sign_in">Sign in</string>
     <string name="button_label_sign_in_underline"><u>Sign in</u></string>

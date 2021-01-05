@@ -34,8 +34,8 @@ class UserSerializer(private val aead: Aead) : Serializer<User?> {
         }
     }
 
-    override fun writeTo(user: User?, output: OutputStream) {
-        val encryptedBytes = aead.encrypt(user?.toByteArray(), null)
+    override fun writeTo(t: User?, output: OutputStream) {
+        val encryptedBytes = aead.encrypt(t?.toByteArray(), null)
         output.write(encryptedBytes)
     }
 

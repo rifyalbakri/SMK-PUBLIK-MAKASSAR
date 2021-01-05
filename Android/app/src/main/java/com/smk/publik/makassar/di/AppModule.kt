@@ -5,6 +5,10 @@ import com.google.crypto.tink.Aead
 import com.google.crypto.tink.aead.AeadConfig
 import com.google.crypto.tink.aead.AesGcmKeyManager
 import com.google.crypto.tink.integration.android.AndroidKeysetManager
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.smk.publik.makassar.data.repositories.UserRepository
 import com.smk.publik.makassar.presentation.viewmodel.UserViewModel
 import com.smk.publik.makassar.utils.UserSerializer
 import org.koin.android.ext.koin.androidApplication
@@ -39,8 +43,17 @@ object AppModule {
             fileName = DATASTORE_FILE,
             serializer = UserSerializer(get())
         ) }
+        single {
+            UserRepository(get(), get(), get())
+        }
         viewModel {
             UserViewModel(get())
+        }
+        single {
+            Firebase.auth
+        }
+        single {
+            Firebase.database.reference
         }
     }
 }

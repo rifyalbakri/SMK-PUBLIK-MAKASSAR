@@ -74,6 +74,7 @@
                 app:cardCornerRadius="8dp">
 
                 <EditText
+                    android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -103,6 +104,7 @@
                 app:cardCornerRadius="8dp">
 
                 <EditText
+                    android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -157,6 +159,20 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/tvForgotPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/_2sdp"
+                android:onClick="@{listener}"
+                android:text="@string/button_label_forgot_password_underline"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
