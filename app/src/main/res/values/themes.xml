@@ -1,0 +1,35 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.SMKPublikMakassar" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryColorVariant</item>
+        <item name="colorOnPrimary">@color/primaryTextColor</item>
+        <item name="android:colorBackground">@color/primaryColor</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@android:color/white</item>
+        <item name="colorApproved">@color/colorApproved</item>
+        <item name="colorOnApproved">@android:color/white</item>
+        <item name="colorDisabled">@color/colorDisabled</item>
+        <item name="colorOnDisabled">@color/colorOnDisabled</item>
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorOnSecondary">@color/secondaryTextColor</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/primaryColor</item>
+        <item name="textAppearanceHeadline1">@style/TextAppearance.Makassar.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.Makassar.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.Makassar.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.Makassar.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.Makassar.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.Makassar.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.Makassar.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.Makassar.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.Makassar.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.Makassar.Body2</item>
+        <item name="textAppearanceButton">@style/TextAppearance.Makassar.Button</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.Makassar.Caption</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.Makassar.Overline</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.SMKPublikMakassar">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+</resources>
