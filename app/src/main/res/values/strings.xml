@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">SMK Publik Makassar</string>
+    <string name="label_e_learning">E-Learning</string>
+    <string name="label_loading">Loading..</string>
+    <string name="label_connecting">Connecting..</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Kata Sandi</string>
+    <string name="label_password_repeat">Ulangi Kata Sandi</string>
+    <string name="label_nuptk">NUPTK</string>
+    <string name="label_class_selection">Kamu Kelas Berapa?</string>
+    <string name="label_class_x">Kelas X</string>
+    <string name="label_class_xi">Kelas XI</string>
+    <string name="label_class_xii">Kelas XII</string>
+    <string name="label_nis">NIS</string>
+    <string name="button_label_sign_up_underline"><u>Buat sekarang</u></string>
+    <string name="button_label_forgot_password">Lupa Password?</string>
+    <string name="button_label_sign_up">Daftar</string>
+    <string name="button_label_sign_in">Masuk</string>
+    <string name="button_label_sign_in_underline"><u>Sign in</u></string>
+    <string name="label_siswa_baru">Pengguna baru?</string>
+    <string name="label_sudah_punya_akun">Sudah punya akun ?</string>
+    <string name="label_belum_punya_akun">Belum punya akun?</string>
+    <string name="button_label_role_siswa">Siswa</string>
+    <string name="button_label_role_guru">Guru</string>
+    <string name="button_label_role_admin">Admin</string>
+    <string name="button_label_role_umum">Umum</string>
+    <string name="label_nama">Nama</string>
+    <string name="label_nomor">No. Telfon</string>
+    <string name="label_mata_pelajaran">Mata Pelajaran</string>
+</resources>

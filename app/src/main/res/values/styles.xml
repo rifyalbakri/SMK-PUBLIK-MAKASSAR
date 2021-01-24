@@ -1,0 +1,67 @@
+<resources>
+    <style name="MaterialAlertDialog.Rounded" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialAlertDialog.Rounded</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.MaterialAlertDialog.Rounded" parent="">
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="TextInputDropDownLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">@color/outline_color</item>
+        <item name="hintTextColor">?attr/colorOnApproved</item>
+        <item name="android:textColorHint">?attr/colorSecondary</item>
+        <item name="endIconTint">?attr/colorOnApproved</item>
+        <item name="hintTextAppearance">?attr/textAppearanceBody1</item>
+        <item name="shapeAppearanceOverlay">@style/TextInputLayoutShape</item>
+    </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/outline_color</item>
+        <item name="hintTextColor">?attr/colorOnApproved</item>
+        <item name="endIconTint">?attr/colorOnApproved</item>
+        <item name="android:textColorHint">?attr/colorSecondary</item>
+        <item name="hintTextAppearance">?attr/textAppearanceBody1</item>
+        <item name="shapeAppearanceOverlay">@style/TextInputLayoutShape</item>
+    </style>
+
+    <style name="TextInputLayoutShape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">@dimen/defaultRadius</item>
+        <item name="cornerSizeTopLeft">@dimen/defaultRadius</item>
+        <item name="cornerSizeBottomRight">@dimen/defaultRadius</item>
+        <item name="cornerSizeBottomLeft">@dimen/defaultRadius</item>
+    </style>
+
+
+    <style name="RolesSelectorStyleLeft" parent="RolesSelectorStyleBase">
+        <item name="shapeAppearanceOverlay">@style/RolesSelectorShapeLeft</item>
+    </style>
+
+    <style name="RolesSelectorStyleRight" parent="RolesSelectorStyleBase">
+        <item name="shapeAppearanceOverlay">@style/RolesSelectorShapeRight</item>
+    </style>
+
+    <style name="RolesSelectorStyleBase" parent="@style/Widget.MaterialComponents.Button">
+        <item name="strokeColor">?attr/colorSecondary</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="backgroundTint">?attr/colorPrimaryVariant</item>
+        <item name="android:textAppearance">?attr/textAppearanceButton</item>
+        <item name="android:textColor">?attr/colorOnApproved</item>
+    </style>
+
+    <style name="RolesSelectorShapeLeft" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeTopLeft">@dimen/defaultRadius</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">@dimen/defaultRadius</item>
+    </style>
+    <style name="RolesSelectorShapeRight" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">@dimen/defaultRadius</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomRight">@dimen/defaultRadius</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+</resources>

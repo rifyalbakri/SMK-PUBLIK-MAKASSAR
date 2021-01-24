@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr format="color" name="colorApproved"/>
+    <attr format="color" name="colorOnApproved"/>
+    <attr format="color" name="colorDisabled"/>
+    <attr format="color" name="colorOnDisabled"/>
+</resources>

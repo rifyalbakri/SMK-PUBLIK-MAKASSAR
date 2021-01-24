@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="listener"
+            type="android.view.View.OnClickListener"/>
+        <variable name="isTeacher"
+            type="androidx.databinding.ObservableBoolean"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorPrimary">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:animateLayoutChanges="true"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSiswa"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                style="@style/RolesSelectorStyleLeft"
+                app:backgroundTint="?attr/colorSecondary"
+                android:textColor="?attr/colorOnSecondary"
+                android:singleLine="true"
+                android:paddingStart="58dp"
+                android:onClick="@{listener}"
+                android:paddingTop="14dp"
+                android:paddingEnd="58dp"
+                android:paddingBottom="14dp"
+                android:text="@string/button_label_role_siswa"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGuru"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:layout_height="wrap_content"
+                android:onClick="@{listener}"
+                style="@style/RolesSelectorStyleRight"
+                android:paddingStart="58dp"
+                android:paddingTop="14dp"
+                android:paddingEnd="58dp"
+                android:paddingBottom="14dp"
+                android:text="@string/button_label_role_guru"/>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="35dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnRegister"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlNama"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="24dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/label_nama">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNama"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:textColor="?attr/colorSecondary"
+                        app:hintTextAppearance="?attr/textAppearanceBody1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/llKelas"
+                    android:layout_marginBottom="24dp"
+                    android:orientation="vertical"
+                    android:visibility="@{isTeacher ? View.GONE : View.VISIBLE}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_class_selection"
+                        android:layout_marginBottom="8dp"
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        android:textColor="?attr/colorOnApproved"/>
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:checkedButton="@+id/rbKelasX"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/rbKelasX"
+                            android:buttonTint="?attr/colorOnApproved"
+                            android:textAppearance="?attr/textAppearanceBody1"
+                            android:textColor="?attr/colorOnApproved"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/label_class_x"/>
+
+                        <RadioButton
+                            android:id="@+id/rbKelasXI"
+                            android:buttonTint="?attr/colorOnApproved"
+                            android:layout_width="match_parent"
+                            android:textAppearance="?attr/textAppearanceBody1"
+                            android:textColor="?attr/colorOnApproved"
+                            android:layout_height="match_parent"
+                            android:text="@string/label_class_xi"/>
+
+                        <RadioButton
+                            android:id="@+id/rbKelasXII"
+                            android:buttonTint="?attr/colorOnApproved"
+                            android:layout_width="match_parent"
+                            android:textAppearance="?attr/textAppearanceBody1"
+                            android:textColor="?attr/colorOnApproved"
+                            android:layout_height="match_parent"
+                            android:text="@string/label_class_xii"/>
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlMatpel"
+                    style="@style/TextInputDropDownLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:visibility="@{isTeacher ? View.VISIBLE : View.GONE}"
+                    android:layout_marginBottom="24dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/label_mata_pelajaran">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/etMatpel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:textColor="?attr/colorSecondary"
+                        app:hintTextAppearance="?attr/textAppearanceBody1" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlTelepon"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="24dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/label_nomor">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etTelepon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:textColor="?attr/colorSecondary"
+                        app:hintTextAppearance="?attr/textAppearanceBody1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlEmail"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="24dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/label_email">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:textColor="?attr/colorSecondary"
+                        app:hintTextAppearance="?attr/textAppearanceBody1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlNUPTK"
+                    style="@style/TextInputLayoutStyle"
+                    android:visibility="@{isTeacher ? View.VISIBLE : View.GONE}"
+                    android:layout_marginBottom="24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/label_nuptk">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNUPTK"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:textColor="?attr/colorSecondary"
+                        app:hintTextAppearance="?attr/textAppearanceBody1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlNIS"
+                    style="@style/TextInputLayoutStyle"
+                    android:visibility="@{isTeacher ? View.GONE : View.VISIBLE}"
+                    android:layout_marginBottom="24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/label_nis">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNIS"
+                        android:layout_width="match_parent"
+                        android:inputType="phone"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/colorSecondary"
+                        app:hintTextAppearance="?attr/textAppearanceBody1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlPassword"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/label_password"
+                    android:layout_marginBottom="24dp"
+                    app:endIconMode="password_toggle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/colorSecondary"
+                        android:inputType="textPassword"
+                        app:hintTextAppearance="?attr/textAppearanceBody1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlPasswordRepeat"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:hint="@string/label_password_repeat"
+                    app:endIconMode="password_toggle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPasswordRepeat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/colorSecondary"
+                        android:inputType="textPassword"
+                        app:hintTextAppearance="?attr/textAppearanceBody1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="60dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:onClick="@{listener}"
+            app:cornerRadius="@dimen/defaultRadius"
+            android:text="@string/button_label_sign_up"
+            android:textColor="?attr/colorOnDisabled"
+            app:backgroundTint="?attr/colorDisabled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
